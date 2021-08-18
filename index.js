@@ -1,44 +1,5 @@
 
 
-/* const getData = async () => {
-
-    const response = await fetch("https://striveschool-api.herokuapp.com/api/product/", {
-        headers: {
-        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTFkMGNkODJkNTI2MjAwMTViNmRkMTEiLCJpYXQiOjE2MjkyOTM3ODUsImV4cCI6MTYzMDUwMzM4NX0.LgVvAVyb8dGeuQmvuw1iDWwn2izs8VX2V5JT7ajkWxc"
-        }
-        })
-    const products = await response.json()
-    return products
-
-}
-
-const displayProducts = (products) => {
-    const row = document.querySelector(".row")
-    console.log("products is: ", products)
-
-    for (let i = 0; i < products.length; i++) {
-      row.innerHTML += `
-        <div class="col-12 col-sm-6 col-md-3">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title"><a href="/userpage1.html">${products[i].name}</a></h5>
-                </div>
-            </div>
-        </div>
-             `
-    }
-}
-
-window.onload = async () => {
-    const url = "https://striveschool-api.herokuapp.com/api/product/"
-    try {
-        const products = await getData()
-        displayProducts(products)
-    } catch (err) {
-        console.error(err.message)
-    }
-} */
-
 const getData = async (url) => {
     try {
         const response = await fetch("https://striveschool-api.herokuapp.com/api/product/", {
