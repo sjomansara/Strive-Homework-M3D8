@@ -8,5 +8,13 @@ body {
 }
 
 #amazonImg {
-    width: 300px;
+    width: 200px;
+}
+
+.navbar {
+    background-color: #131921 !important;
+}
+
+hr {
+    border-color: #232F3E;
 }
