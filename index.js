@@ -1,112 +1,105 @@
 
-
-const getData = async (url) => {
+const getAllProducts = async () => {
+    const url = "https://striveschool-api.herokuapp.com/api/product/"
     try {
-        const response = await fetch("https://striveschool-api.herokuapp.com/api/product/", {
+        const response = await fetch (url, {
+            method: "GET",
             headers: {
-            "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTFkMGNkODJkNTI2MjAwMTViNmRkMTEiLCJpYXQiOjE2MjkyOTM3ODUsImV4cCI6MTYzMDUwMzM4NX0.LgVvAVyb8dGeuQmvuw1iDWwn2izs8VX2V5JT7ajkWxc"
+                "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTFkMGNkODJkNTI2MjAwMTViNmRkMTEiLCJpYXQiOjE2MjkzNzY4MTQsImV4cCI6MTYzMDU4NjQxNH0.p_v_v7utMuljc6yzUrCSDzJcKRZo0AJojKtFAuA9528",
             }
-            })
+        })
 
-        const products = await response.json()
+        const allProducts = await response.json()
+        console.log(allProducts)
 
-        return products
-
-    } catch (err) {
-        console.log("error", err)
+        return allProducts
+    } catch (error) {
+        console.log(error)
     } finally {
-        console.log("finally")
-    }
-}
-
-function displayProducts(products) {
-    const row = document.querySelector(".row")
-
-    console.log("products is: ", products)
-
-    for (let i = 0; i < products.length; i++) {
-      row.innerHTML += `
-        <div class="col-12 col-sm-6 col-md-3">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">${products[i].name}</h5>
-                    <p class="card-text">${products[i].description}</p>
-                    <p class="card-text">${products[i].brand}</p>
-                    <p class="card-text">${products[i].price}</p>
-                </div>
-            </div>
-        </div>
-             `
+        console.log("Products uploaded successfully")
     }
 }
 
 window.onload = async () => {
+    const allProducts = await getAllProducts()
 
-    const url = "https://striveschool-api.herokuapp.com/api/product/"
+    displayProduct(allProducts)
+}
 
-    const products = await getData(url)
-
-    displayProducts(products)
-
-    console.log(products)
-
-    let form = document.getElementById("myForm");
-    function handleForm(event) { 
-        console.log("prevented")
-        event.preventDefault(); 
-    } 
-    form.addEventListener('submit', handleForm);
-
+const displayProduct = (products) => {
+    let displayProducts = document.querySelector(".row #allProducts")
+    
+    products.forEach(product => {
+     
+        displayProducts.innerHTML += 
+        `<div class="card col-sm-4 col-lg-2">
+        <img class="card-img-top" src="${product.imageUrl}" alt="Card image cap">
+        <div class="card-body">
+            <h5 class="card-title">${product.name}</h5>
+            <h6 class="card-text">Brand: ${product.brand}</h6>
+            <p class="card-text">Description: ${product.description}</p>
+            <p class="card-text">Price: ${product.price}</p>
+          </div>
+    </div>`
+        
+})
 }
 
 
+let results = []
 
-const handleSubmit = async (event) => {
-    console.log(event)
-
-    const url = "https://striveschool-api.herokuapp.com/api/product/"
-    
-    let name = document.getElementById("name").value
-    let description = document.getElementById("description").value
-    let brand = document.getElementById("brand")
-    let price = document.getElementById("price").value
-
-    const myProduct = {
-        name: name,
-        description: description,
-        brand: brand,
-        price: price
-    }
-
+const getProduct = async (url) => {
     try {
         const response = await fetch(url, {
-            method: "POST",
-            body: JSON.stringify(myProduct),
             headers: {
-                "Content-Type": "application/json",
-                "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTFkMGNkODJkNTI2MjAwMTViNmRkMTEiLCJpYXQiOjE2MjkyOTM3ODUsImV4cCI6MTYzMDUwMzM4NX0.LgVvAVyb8dGeuQmvuw1iDWwn2izs8VX2V5JT7ajkWxc"
+                "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTFkMGNkODJkNTI2MjAwMTViNmRkMTEiLCJpYXQiOjE2MjkzNzY4MTQsImV4cCI6MTYzMDU4NjQxNH0.p_v_v7utMuljc6yzUrCSDzJcKRZo0AJojKtFAuA9528",
             }
         })
 
-        if (response.ok) {
-            const respProduct = await response.json()
-            alert("Appointment created successfully with an id of " + respProduct._id)
-        } else {
-            if (response.status >= 400 && response.status < 500) {
-                throw new Error("User generated error, verify the data that you are sending!")
-            } else if (response.status >= 500 && response.status < 600) {
-                throw new Error("Server generated error, contact the admin to fix this problem.")
-            }
+        const allProducts = await response.json()
+        return allProducts
+
+    } catch(error){
+        console.log(error)
+    }
+}
+
+window.onload = () => {
+    const url = "https://striveschool-api.herokuapp.com/api/product/"
+    getProduct (url)  
+}
+
+    const handleSubmit = async function(event) {
+
+        const url = "https://striveschool-api.herokuapp.com/api/product/"
+
+          const newProduct = {
+          name: document.getElementById("name").value,
+          description: document.getElementById("description").value,
+          brand: document.getElementById("brand").value,
+          price: document.getElementById("price").value,
+          imageUrl: document.getElementById("image").value,
+        }
+        try {
+          const response = await fetch(
+            "https://striveschool-api.herokuapp.com/api/product/",
+            {
+              method: "POST",
+              body: JSON.stringify(newProduct),
+              headers: { 
+                "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTFkMGNkODJkNTI2MjAwMTViNmRkMTEiLCJpYXQiOjE2MjkzNzY4MTQsImV4cCI6MTYzMDU4NjQxNH0.p_v_v7utMuljc6yzUrCSDzJcKRZo0AJojKtFAuA9528",
+                "Content-Type": "application/json",
+              }
+            })
+            if(response.ok) {
+            const addedProduct = await response.json()
+            alert("Product (ID: " + addedProduct._id + ") is now in your shopping cart.")
+            return addedProduct
         }
 
-        console.log("no exception was thrown")
-
-    } catch (err) {
-        alert(err.message)
-    } finally {
-        console.log("You are going to see me every time regardless.")
+        } catch (error) {
+        console.log(error)
+        }finally{
+        console.log(newProduct)
+        }
     }
-
-    console.log("last thing")
-
-}
