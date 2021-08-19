@@ -26,23 +26,24 @@ window.onload = async () => {
 }
 
 const displayProduct = (products) => {
-    let displayProducts = document.querySelector(".row #allProducts")
+    let displayProducts = document.querySelector(".row")
     console.log("displayProducts: ", displayProducts)
     
     products.forEach(product => {
      
         displayProducts.innerHTML += 
-        `<div class="card col-sm-4 col-lg-2">
-        <img class="card-img-top mt-3" src="${product.imageUrl}" alt="Card image cap">
+        `<div class="card m-3 justify-content-center">
+        <img id="cardImg" class="card-img-top m-4" src="${product.imageUrl}" alt=""></img>
         <div class="card-body">
-            <h5 class="card-title">${product.name}</h5>
-            <h6 class="card-text">Brand: ${product.brand}</h6>
-            <p class="card-text">Description: ${product.description}</p>
-            <p class="card-text">Price: ${product.price}</p>
-          </div>
-    </div>`
+          <h5 class="card-title">${product.name}</h5>
+          <p class="card-text">Brand: ${product.brand}</p>
+          <p class="card-text">Description: ${product.description}</p>
+          <p class="card-text">Price: ${product.price} €</p>
+        </div>
+        </div>`
         
 })
 }
+
 
 

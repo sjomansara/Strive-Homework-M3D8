@@ -18,3 +18,13 @@ body {
 hr {
     border-color: #232F3E;
 }
+
+#cardImg {
+    max-width: 200px;
+    height: 200px;
+}
+
+.card {
+    width: 250px;
+    height: 470px;
+}
